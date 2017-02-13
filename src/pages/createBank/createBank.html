@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      New Bank
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label color="primary">Name</ion-label>
+      <ion-input placeholder="Name" [(ngModel)]="bank.name" text-right></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">APR</ion-label>
+      <ion-input placeholder="APR" [(ngModel)]="bank.apr" type='number' text-right></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Balance</ion-label>
+      <ion-input placeholder="Balance" type='number' [(ngModel)]="bank.balance" text-right></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Due date</ion-label>
+      <ion-datetime displayFormat="MMM DD, YYYY" [(ngModel)]="bank.dueDate"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Payment</ion-label>
+      <ion-input placeholder="Default payment" type='number' [(ngModel)]="bank.amount" text-right></ion-input>
+    </ion-item>
+    <ion-item>
+      <button ion-button block color="primory" (click)="createBank(bank)">Create bank</button>
+    </ion-item>
+  </ion-list>
+  <!--<button ion-button block color="danger" (click)="removeBank(bank)" bottom>Remove bank</button>-->
+</ion-content>
