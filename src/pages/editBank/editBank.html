@@ -28,6 +28,14 @@
       <ion-input placeholder="Default payment" [(ngModel)]="bank.amount" text-right></ion-input>
     </ion-item>
     <ion-item>
+      <ion-label color="primary">First notification</ion-label>
+      <ion-input placeholder="Days before due" type='number' [(ngModel)]="bank.firstNotification" text-right></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Second notification</ion-label>
+      <ion-input placeholder="Days before due" type='number' [(ngModel)]="bank.secondNotification" text-right></ion-input>
+    </ion-item>
+    <ion-item>
       <button ion-button block color="primory" (click)="updateBank(bank)">Update bank</button>
     </ion-item>
   </ion-list>

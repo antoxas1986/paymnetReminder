@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { NotificationService } from './notification.service';
 
 @Injectable()
 export class BankService {
-  constructor(private storage: Storage) {
+  constructor(private storage: Storage, private notificationService: NotificationService) {
 
   }
   getBanks() {
@@ -19,6 +20,7 @@ export class BankService {
       }
       banks.push(bank);
       this.storage.set('banks', banks);
+      this.notificationService.setNotifications(banks);
     });
   }
   removeBank(bank) {
@@ -28,18 +30,18 @@ export class BankService {
         return item.id != bank.id;
       });
       this.storage.set('banks', banks);
+      this.notificationService.setNotifications(banks);
     });
   }
   updateBank(bank) {
     this.getBanks().then(data => {
       let banks = data;
-      console.log(banks);
-      console.log(bank);
       banks = banks.filter(item => {
         return item.id != bank.id;
       });
       banks.push(bank);
       this.storage.set('banks', banks);
+      this.notificationService.setNotifications(banks);
     });
   }
 }

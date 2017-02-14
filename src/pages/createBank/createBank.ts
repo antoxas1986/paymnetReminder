@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { BankService } from '../../service/bank.service';
-import { NavController, NavParams } from 'ionic-angular';
-
+import { NavController } from 'ionic-angular';
 @Component({
     selector: 'page-createBank',
     templateUrl: 'createBank.html',
@@ -11,12 +10,13 @@ export class CreateBankPage {
 
     bank: any;
 
-    constructor(public navCtrl: NavController, private navParams: NavParams, private bankService: BankService) {
+    constructor(public navCtrl: NavController, private bankService: BankService) {
         this.bank = {};
+        this.bank.notifications = [10, 3];
     }
 
-    createBank(bank) {
-        console.log(bank);
+    createBank() {
+        console.log(this.bank);
         this.bankService.createBank(this.bank);
         this.navCtrl.pop();
     }

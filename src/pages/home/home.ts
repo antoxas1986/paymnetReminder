@@ -90,4 +90,6 @@ interface bank {
   apr: number;
   dueDate: string;
   amount: number;
+  firstNotification: number;
+  secondNotification: number;
 }
