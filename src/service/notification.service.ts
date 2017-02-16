@@ -22,6 +22,7 @@ export class NotificationService {
 
             LocalNotifications.cancelAll().then(() => {
                 LocalNotifications.schedule(this.notifications);
+                this.storage.set('notifications', this.notifications);
                 this.notifications = [];
             });
         }
@@ -31,16 +32,32 @@ export class NotificationService {
         bank.notifications.forEach((numberDays, index) => {
             let notificationTime = moment(bank.dueDate);
             notificationTime.subtract(numberDays, 'days');
-            let t = new Date(notificationTime.format('YYYY-MM-DD'));
+            let date = new Date(notificationTime.format('YYYY-MM-DD'));
 
             let notification = {
                 id: this.notificationID++,
                 title: 'Payment reminder',
                 text: bank.name + ' payment is due in ' + numberDays + ' days.',
-                at: t,
+                at: date,
+                data:{ bankName: bank.name, numberOfDays: numberDays, isActive: true },
                 every: 'month'
             };
             this.notifications.push(notification);
         });
+    }
+
+    getNotificationsFromStorage() {
+        return this.storage.get('notifications');
+    }
+
+    updateNotifications(notifications) {
+        if (this.platform.is('cordova')) {
+            LocalNotifications.cancelAll().then(() => {
+                LocalNotifications.schedule(notifications);
+            });
+        }
+    }
+    updateNotificationStorage(notifications) {
+        this.storage.set('notifications', notifications);
     }
 }

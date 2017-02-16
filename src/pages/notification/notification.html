@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      Notifications
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content >
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list no-lines>
+
+    <ion-item *ngFor="let notification of notifications">
+      <ion-label>{{notification.data.bankName}} {{notification.data.numberOfDays}} days notification</ion-label>
+      <ion-checkbox color="primary" [(ngModel)]="notification.data.isActive"></ion-checkbox>
+    </ion-item>
+    <button (click)="updateNotifications()" ion-button color="primary" full>Update notifications</button>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+
+  <!--<button (click)="addNotifications()" ion-button color="primary" full>Schedule</button>
+  <button (click)="cancelAll()" ion-button color="danger" full>Leave me alone!</button>-->
+
+</ion-footer>
