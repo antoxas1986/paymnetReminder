@@ -18,7 +18,7 @@ export class NotificationPage {
   }
   ionViewDidLoad() { }
 
-  ionViewDidEnter() { 
+  ionViewDidEnter() {
     this.getNotifications();
   }
 
@@ -58,7 +58,7 @@ export class NotificationPage {
     let notificationToSave = this.notifications.filter(item => {
       return item.data.isActive
     })
-    let test = Array.from(notificationToSave);
+    let test = JSON.parse(JSON.stringify(notificationToSave));
     if (this.platform.is("cordova")) {
       this.notificationService.updateNotifications(test);
       this.notificationService.updateNotificationStorage(this.notifications);

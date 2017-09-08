@@ -12,7 +12,7 @@ import * as moment from 'moment';
 })
 export class HomePage {
 
-  banks: bank[];
+  banks: any[];
   today: any;
   test: string;
 
@@ -34,8 +34,18 @@ export class HomePage {
     });
   }
 
+  getTotal() {
+    let total = 0;
+    this.banks.forEach(item => {
+      total += parseInt(item.amount);
+    });
+    return total;
+  }
+
   makePayment(bank) {
-    bank.balance = parseFloat((parseFloat(bank.balance) * parseFloat(bank.apr) / 100 / 12 + parseFloat(bank.balance) - parseFloat(bank.amount)).toFixed(2));
+    if (bank.type == 'bank') {
+      bank.balance = parseFloat((parseFloat(bank.balance) * parseFloat(bank.apr) / 100 / 12 + parseFloat(bank.balance) - parseFloat(bank.amount)).toFixed(2));
+    }
     bank.dueDate = moment(bank.dueDate).add(1, 'month').format();
     this.bankService.updateBank(bank);
     return bank;
@@ -53,24 +63,22 @@ export class HomePage {
     this.navCtrl.push(CreateBankPage);
   }
 
-  addTest(fab: FabContainer) {
-    fab.close();
-    this.test = "Test clicked";
-  }
-
   editBank(bank) {
+    console.log(bank);
     this.navCtrl.push(EditBankPage, { bank: bank })
   }
   getNumberPayments(bank) {
     let counter = 0;
-    if (this.isAmountEnough(bank)) {
-      let balance = bank.balance;
-      while (balance > 0) {
-        let charge = balance * bank.apr / 100 / 12;
-        balance = balance - bank.amount + charge;
-        counter++;
+    if (bank.type == 'bank') {
+      if (this.isAmountEnough(bank)) {
+        let balance = bank.balance;
+        while (balance > 0) {
+          let charge = balance * bank.apr / 100 / 12;
+          balance = balance - bank.amount + charge;
+          counter++;
+        }
+        return counter;
       }
-      return counter;
     }
     counter = 99
     return counter;
@@ -82,14 +90,4 @@ export class HomePage {
     return (charge - bank.amount) < 0 ? true : false;
   }
 
-}
-interface bank {
-  id: number;
-  name: string;
-  balance: number;
-  apr: number;
-  dueDate: string;
-  amount: number;
-  firstNotification: number;
-  secondNotification: number;
 }

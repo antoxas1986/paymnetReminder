@@ -1,45 +1,53 @@
-<ion-content padding>
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-  <h6 text-center>{{today| date:"MMM dd, yyyy"}}</h6>
-  <p>{{test}}</p>
-  <ion-card *ngFor="let bank of banks | orderBy: '-dueDate'">
-    <ion-card-header no-padding>
-      <ion-row>
-        <ion-col center class="bank-name">
-          <h1><strong>{{bank.name}}</strong></h1>
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ion-row class="header-row">
+        <ion-col>
+            <h6 text-left>Total payments: ${{getTotal()}}</h6>
         </ion-col>
-        <ion-col text-right>
-          <button ion-button color="dark" clear (click)="editBank(bank)">
+        <ion-col>
+            <h6 text-right>{{today| date:"MMM dd, yyyy"}}</h6>
+        </ion-col>
+    </ion-row>
+    <ion-card *ngFor="let bank of banks | orderBy: '-dueDate'">
+        <ion-card-header no-padding>
+            <ion-row>
+                <ion-col center class="bank-name">
+                    <h1><strong>{{bank.name}}</strong></h1>
+                </ion-col>
+                <ion-col text-right>
+                    <button ion-button color="dark" clear (click)="editBank(bank)">
             <ion-icon name="cog"></ion-icon>
           </button>
-        </ion-col>
-      </ion-row>
-    </ion-card-header>
-    <ion-card-content [ngClass]="getBackground(bank)">
-      <ion-col text-right>Due: {{bank.dueDate | date:medium}}</ion-col>
-      <ion-row>
-        <ion-col class="balance">${{bank.balance}}</ion-col>
-        <ion-col class="apr" text-right>APR {{bank.apr}}%</ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label floating>Amount</ion-label>
-            <ion-input type="number" [(ngModel)]="bank.amount"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <p>If all your payments will be ${{bank.amount}} it will take {{getNumberPayments(bank)}} payments to pay off your balance.</p>
-      <button ion-button full (click)="makePayment(bank)">Make payment</button>
-    </ion-card-content>
-  </ion-card>
-  <ion-fab bottom right #fab>
-    <button ion-fab><ion-icon name="add"></ion-icon></button>
-    <ion-fab-list side="top">
-      <button ion-fab (click)="addBank(fab)">Bank</button>
-      <button ion-fab (click)="addTest(fab)">Test</button>
-    </ion-fab-list>
-  </ion-fab>
+                </ion-col>
+            </ion-row>
+        </ion-card-header>
+        <ion-card-content [ngClass]="getBackground(bank)">
+            <ion-col text-right>Due: {{bank.dueDate | date:medium}}</ion-col>
+            <ion-row>
+                <ion-col class="balance" *ngIf="bank.type == 'bank'">${{bank.balance}}</ion-col>
+                <ion-col class="apr" text-right *ngIf="bank.type == 'bank'">APR {{bank.apr}}%</ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col *ngIf="bank.type == 'bank'">
+                    <ion-item>
+                        <ion-label floating>Amount</ion-label>
+                        <ion-input type="number" [(ngModel)]="bank.amount"></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col *ngIf="bank.type != 'bank'" class="balance" text-center>${{bank.amount}}</ion-col>
+            </ion-row>
+            <p *ngIf="bank.type == 'bank'">If all your payments will be ${{bank.amount}} it will take {{getNumberPayments(bank)}} payments to pay off your
+                balance.
+            </p>
+            <button ion-button full (click)="makePayment(bank)">Make payment</button>
+        </ion-card-content>
+    </ion-card>
+    <ion-fab bottom right #fab>
+        <button ion-fab><ion-icon name="add"></ion-icon></button>
+        <ion-fab-list side="top">
+            <button ion-fab (click)="addBank(fab)">Bank</button>
+        </ion-fab-list>
+    </ion-fab>
 </ion-content>

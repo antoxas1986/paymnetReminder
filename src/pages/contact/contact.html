@@ -1,16 +1,18 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Contact
-    </ion-title>
-  </ion-navbar>
+    <ion-navbar (click)="countClicks()">
+        <ion-title>
+            Contact
+        </ion-title>
+    </ion-navbar>
 </ion-header>
-
 <ion-content>
-  <ion-list>
-    <ion-item>
-      <ion-icon name="logo-twitter" item-left></ion-icon>
-      @Antoxas7
-    </ion-item>
-  </ion-list>
+    <ion-list>
+        <ion-item>
+            <ion-icon name="logo-twitter" item-left></ion-icon>
+            @Antoxas7
+        </ion-item>
+        <ion-item *ngIf="counter>=5">
+            <button ion-button block color="danger" (click)="deleteBanks()">Delete banks</button>
+        </ion-item>
+    </ion-list>
 </ion-content>

@@ -1,42 +1,50 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      New Bank
-    </ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>
+            New Bank
+        </ion-title>
+    </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <ion-list>
-    <ion-item>
-      <ion-label color="primary">Name</ion-label>
-      <ion-input placeholder="Name" [(ngModel)]="bank.name" text-right></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary">APR</ion-label>
-      <ion-input placeholder="APR" [(ngModel)]="bank.apr" type='number' text-right></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary">Balance</ion-label>
-      <ion-input placeholder="Balance" type='number' [(ngModel)]="bank.balance" text-right></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary">Due date</ion-label>
-      <ion-datetime displayFormat="MMM DD, YYYY" [(ngModel)]="bank.dueDate"></ion-datetime>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary">Payment</ion-label>
-      <ion-input placeholder="Default payment" type='number' [(ngModel)]="bank.amount" text-right></ion-input>
-    </ion-item>
-     <ion-item>
-      <ion-label color="primary">First notification</ion-label>
-      <ion-input placeholder="Days before due" type='number' [(ngModel)]="bank.notifications[0]" text-right></ion-input>
-    </ion-item>
-     <ion-item>
-      <ion-label color="primary">Second notification</ion-label>
-      <ion-input placeholder="Days before due" type='number' [(ngModel)]="bank.notifications[1]" text-right></ion-input>
-    </ion-item>
-    <ion-item>
-      <button ion-button block color="primory" (click)="createBank()">Create bank</button>
-    </ion-item>
-  </ion-list>
+    <ion-list>
+        <ion-item>
+            <ion-label>Payment type</ion-label>
+            <ion-select [(ngModel)]="bank.type">
+                <ion-option value="bank">Bank</ion-option>
+                <ion-option value="car">Car loan/lease</ion-option>
+                <ion-option value="phone">Phone</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary">Name</ion-label>
+            <ion-input placeholder="Name" [(ngModel)]="bank.name" text-right></ion-input>
+        </ion-item>
+        <ion-item *ngIf="bank.type == 'bank'">
+            <ion-label color="primary">APR</ion-label>
+            <ion-input placeholder="APR" [(ngModel)]="bank.apr" type='number' text-right></ion-input>
+        </ion-item>
+        <ion-item *ngIf="bank.type == 'bank'">
+            <ion-label color="primary">Balance</ion-label>
+            <ion-input placeholder="Balance" type='number' [(ngModel)]="bank.balance" text-right></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary">Due date</ion-label>
+            <ion-datetime displayFormat="MMM DD, YYYY" [(ngModel)]="bank.dueDate"></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary">Payment</ion-label>
+            <ion-input placeholder="Default payment" type='number' [(ngModel)]="bank.amount" text-right></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary">First notification</ion-label>
+            <ion-input placeholder="Days before due" type='number' [(ngModel)]="bank.notifications[0]" text-right></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary">Second notification</ion-label>
+            <ion-input placeholder="Days before due" type='number' [(ngModel)]="bank.notifications[1]" text-right></ion-input>
+        </ion-item>
+        <ion-item>
+            <button ion-button block color="primary" (click)="createBank()">Create bank</button>
+        </ion-item>
+    </ion-list>
 </ion-content>

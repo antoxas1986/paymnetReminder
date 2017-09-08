@@ -13,6 +13,7 @@ export class EditBankPage {
 
     constructor(public navCtrl: NavController, private navParams: NavParams, private bankService: BankService) {
         this.bank = this.navParams.get('bank');
+        console.log(this.bank);
     }
     removeBank(bank) {
         this.bankService.removeBank(bank);

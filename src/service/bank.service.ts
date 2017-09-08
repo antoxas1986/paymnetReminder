@@ -44,4 +44,7 @@ export class BankService {
       this.notificationService.setNotifications(banks);
     });
   }
+  deleteAllBanks(){
+    this.storage.set('banks', []);
+  }
 }

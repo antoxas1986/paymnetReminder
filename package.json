@@ -39,7 +39,8 @@
     "cordova-plugin-statusbar",
     "cordova-plugin-device",
     "cordova-plugin-splashscreen",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    "de.appplant.cordova.plugin.local-notification"
   ],
   "cordovaPlatforms": [],
   "description": "Payment Reminder: An Ionic project"
