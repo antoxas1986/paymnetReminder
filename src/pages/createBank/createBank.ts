@@ -14,7 +14,6 @@ export class CreateBankPage {
     constructor(public navCtrl: NavController, private bankService: BankService) {
         this.bank = {};
         this.bank.notifications = [10, 3];
-        this.bankType = ['Bank','Payment'];
     }
 
     createBank() {

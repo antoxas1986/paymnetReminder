@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, FabContainer, AlertController } from 'ionic-angular';
+import { NavController, FabContainer } from 'ionic-angular';
 import { BankService } from '../../service/bank.service';
 import { EditBankPage } from '../editBank/editBank';
 import { CreateBankPage } from '../createBank/createBank';
@@ -12,11 +12,11 @@ import * as moment from 'moment';
 })
 export class HomePage {
 
-  banks: any[];
+  banks: any[] = [];
   today: any;
   test: string;
 
-  constructor(public navCtrl: NavController, private bankService: BankService, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, private bankService: BankService) {
     this.today = moment().format('MMM DD, YYYY');
     this.banks = [];
   }
@@ -36,9 +36,24 @@ export class HomePage {
 
   getTotal() {
     let total = 0;
-    this.banks.forEach(item => {
-      total += parseInt(item.amount);
-    });
+    if (this.banks && this.banks.length > 0) {
+      this.banks.forEach(item => {
+        total += parseInt(item.amount, 10);
+      });
+    }
+    return total;
+  }
+
+  getTotalDebt() {
+    let total = 0;
+    if (this.banks && this.banks.length > 0) {
+      this.banks.forEach(payment => {
+        if(payment.type === "bank") 
+        {
+          total += parseInt(payment.balance, 10);
+        }
+      });
+    }
     return total;
   }
 
@@ -64,7 +79,6 @@ export class HomePage {
   }
 
   editBank(bank) {
-    console.log(bank);
     this.navCtrl.push(EditBankPage, { bank: bank })
   }
   getNumberPayments(bank) {
@@ -88,6 +102,11 @@ export class HomePage {
     let balance = bank.balance;
     let charge = balance * bank.apr / 100 / 12;
     return (charge - bank.amount) < 0 ? true : false;
+  }
+
+  countPersent(balance, limit)
+  {
+    return Math.round(balance * 100 / limit);
   }
 
 }

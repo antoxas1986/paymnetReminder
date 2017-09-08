@@ -14,10 +14,8 @@ export class NotificationPage {
   constructor(public navCtrl: NavController, public platform: Platform, private notificationService: NotificationService) {
     this.notifications = [];
     this.getNotifications();
-
   }
-  ionViewDidLoad() { }
-
+  
   ionViewDidEnter() {
     this.getNotifications();
   }

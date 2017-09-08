@@ -5,11 +5,13 @@
     <ion-row class="header-row">
         <ion-col>
             <h6 text-left>Total payments: ${{getTotal()}}</h6>
+            <h6 text-left>Total debt: ${{getTotalDebt()}}</h6>
         </ion-col>
         <ion-col>
             <h6 text-right>{{today| date:"MMM dd, yyyy"}}</h6>
         </ion-col>
     </ion-row>
+    
     <ion-card *ngFor="let bank of banks | orderBy: '-dueDate'">
         <ion-card-header no-padding>
             <ion-row>
@@ -26,8 +28,10 @@
         <ion-card-content [ngClass]="getBackground(bank)">
             <ion-col text-right>Due: {{bank.dueDate | date:medium}}</ion-col>
             <ion-row>
-                <ion-col class="balance" *ngIf="bank.type == 'bank'">${{bank.balance}}</ion-col>
-                <ion-col class="apr" text-right *ngIf="bank.type == 'bank'">APR {{bank.apr}}%</ion-col>
+                <ion-col col-8 class="balance" *ngIf="bank.type == 'bank'">${{bank.balance}} 
+                    <span class="bank-credit-line">of ${{bank.creditLimit}} ({{countPersent(bank.balance, bank.creditLimit)}}%)</span>
+                </ion-col>
+                <ion-col col-4 class="apr" text-right *ngIf="bank.type == 'bank'">APR {{bank.apr}}%</ion-col>
             </ion-row>
             <ion-row>
                 <ion-col *ngIf="bank.type == 'bank'">
@@ -47,7 +51,7 @@
     <ion-fab bottom right #fab>
         <button ion-fab><ion-icon name="add"></ion-icon></button>
         <ion-fab-list side="top">
-            <button ion-fab (click)="addBank(fab)">Bank</button>
+            <button ion-fab (click)="addBank(fab)"><ion-icon name="cash"></ion-icon></button>
         </ion-fab-list>
     </ion-fab>
 </ion-content>
