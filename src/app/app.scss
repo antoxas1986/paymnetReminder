@@ -14,6 +14,7 @@
 // automatically applied to the <body> element in the app.
 ion-content {
   background-image: url('../assets/img/background.jpg');
+  background-color: transparent !important;
 }
 
 ion-header,

@@ -8,10 +8,9 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { EditBankPage } from '../pages/editBank/editBank';
 import { CreateBankPage } from '../pages/createBank/createBank';
-
 import { TabsPage } from '../pages/tabs/tabs';
-import { FormsModule } from '@angular/forms';
 
+import { FormsModule } from '@angular/forms';
 import { IonicStorageModule } from '@ionic/storage';
 import { BankService } from '../service/bank.service';
 import { orderBy } from '../pipes/orederBy.pipe';
@@ -19,6 +18,7 @@ import { NotificationService } from '../service/notification.service';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 
 @NgModule({
@@ -33,9 +33,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     orderBy
   ],
   imports: [
+    BrowserModule, 
     IonicModule.forRoot(MyApp), 
     FormsModule, 
-    BrowserModule, 
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
@@ -57,7 +57,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SplashScreen, 
     IonicStorageModule, 
     BankService, 
-    NotificationService
+    NotificationService,
+    LocalNotifications
   ]
 })
 export class AppModule { }

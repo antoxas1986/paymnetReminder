@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { LocalNotifications } from 'ionic-native';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Platform } from 'ionic-angular';
 import * as moment from 'moment';
 
@@ -8,7 +8,7 @@ import * as moment from 'moment';
 export class NotificationService {
     notifications: any;
     notificationID: number
-    constructor(private storage: Storage, private platform: Platform) {
+    constructor(private storage: Storage, private platform: Platform, private localNotifications: LocalNotifications) {
         this.notifications = [];
         this.notificationID = 1;
     }
@@ -20,8 +20,8 @@ export class NotificationService {
             });
             console.log("Notifications to be scheduled: ", this.notifications);
 
-            LocalNotifications.cancelAll().then(() => {
-                LocalNotifications.schedule(this.notifications);
+            this.localNotifications.cancelAll().then(() => {
+                this.localNotifications.schedule(this.notifications);
                 this.storage.set('notifications', this.notifications);
                 this.notifications = [];
             });
@@ -52,8 +52,8 @@ export class NotificationService {
 
     updateNotifications(notifications) {
         if (this.platform.is('cordova')) {
-            LocalNotifications.cancelAll().then(() => {
-                LocalNotifications.schedule(notifications);
+            this.localNotifications.cancelAll().then(() => {
+                this.localNotifications.schedule(notifications);
             });
         }
     }

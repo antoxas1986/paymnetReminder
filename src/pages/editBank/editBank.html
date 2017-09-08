@@ -23,7 +23,11 @@
             <ion-label color="primary">APR</ion-label>
             <ion-input placeholder="APR" [(ngModel)]="bank.apr" text-right></ion-input>
         </ion-item>
-        <ion-item *ngIf="bank.type == 'bank'"> 
+        <ion-item *ngIf="bank.type == 'bank'">
+            <ion-label color="primary">Credit limit</ion-label>
+            <ion-input placeholder="Credit limit" type='number' [(ngModel)]="bank.creditLimit" text-right></ion-input>
+        </ion-item>
+        <ion-item *ngIf="bank.type == 'bank'">
             <ion-label color="primary">Balance</ion-label>
             <ion-input placeholder="Balance" [(ngModel)]="bank.balance" text-right></ion-input>
         </ion-item>
@@ -44,10 +48,10 @@
             <ion-input placeholder="Days before due" type='number' [(ngModel)]="bank.notifications[1]" text-right></ion-input>
         </ion-item>
         <ion-item>
-            <button ion-button block color="primory" (click)="updateBank(bank)">Update bank</button>
+            <button ion-button block color="primary" (click)="updateBank(bank)">Update payment</button>
+        </ion-item>
+        <ion-item>
+            <button ion-button block color="danger" (click)="removeBank(bank)" bottom>Remove payment</button>
         </ion-item>
     </ion-list>
-    <ion-footer>
-        <button ion-button block color="danger" (click)="removeBank(bank)" bottom>Remove bank</button>
-    </ion-footer>
 </ion-content>
